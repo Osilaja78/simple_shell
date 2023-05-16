@@ -25,7 +25,8 @@ echo "/bin/pwd" | ./hsh
 echo "expected"
 echo " " | /bin/sh
 echo "got"
-echo " " | ./hsh
+echo "ls
+dir" | ./hsh
 
 # 5..............
 echo "expected"

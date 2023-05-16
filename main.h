@@ -26,7 +26,7 @@ int _strcmp(const char *str1, const char *str2);
 /**
  * struct _builtins - struct for builtins
  * @name: name of builtin
- * @func: corresponding function
+ * @fn: corresponding function
  *
  * Description: contains struct for builtins.
  */
