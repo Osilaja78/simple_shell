@@ -27,7 +27,7 @@ int execute_call(char **argv)
 
 	if (actual_cmd == NULL)
 	{
-		/*printf("./hsh: %s: not found\n", cmd);*/
+		fprintf(stderr, "./hsh: 1: %s: not found\n", cmd);
 		free(actual_cmd);
 		return (-1);
 	}

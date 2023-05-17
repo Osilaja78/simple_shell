@@ -6,8 +6,8 @@
 /**
  * check_builtins - checks if command is a builtin.
  * @args: command to be checked
- * 
- * Return: a pointer to the builtin function 
+ *
+ * Return: a pointer to the builtin function
  * (if command is a builtin), else NULL
 */
 int (*check_builtins(char **args))(char **)
@@ -30,7 +30,7 @@ int (*check_builtins(char **args))(char **)
 /**
  * _setenv - sets an environment variable.
  * @args: variable and value to set
- * 
+ *
  * Return: on success 0, 1 on failure.
 */
 int _setenv(char **args)
@@ -51,15 +51,17 @@ int _setenv(char **args)
 /**
  * _unsetenv - unsets an environment variable.
  * @args: env variable to unset
- * 
+ *
  * Return: 0 on success, 1 on failure.
 */
-int _unsetenv(char **args) {
+int _unsetenv(char **args)
+{
 	if (args[1] == NULL)
 	{
 		fprintf(stderr, "Usage: unsetenv VARIABLE\n");
 		return (1);
 	}
+
 	if (unsetenv(args[1]) != 0)
 	{
 		fprintf(stderr, "Error: unable to unset environment variable\n");
