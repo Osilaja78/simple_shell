@@ -18,7 +18,7 @@ int count_token(char *token);
  */
 int main(int argc, char **argv)
 {
-	char *lineptr = NULL, *lineptr_2 = NULL, *token;
+	char *lineptr = NULL, *lineptr_2 = NULL, *token, **sep;
 	const char *delimeter = "\n";
 	size_t n = 0;
 	ssize_t chars_read;
@@ -48,7 +48,9 @@ int main(int argc, char **argv)
 		{
 			lineptr_2 = _strdup(token);
 			count = count_token(lineptr_2);
-			argv = create_arg_list(token, count);
+			/*sep = command_separator(token, ';');
+			count = count_token(sep);*/
+			argv = create_arg_list(sep, count);
 
 			if (argv[0] != NULL)
 			{
@@ -97,6 +99,7 @@ int count_token(char *token)
 		tok = _strtok(NULL, delimeter);
 	}
 	count++;
+	printf("%i\n", count);
 	return (count);
 }
 
