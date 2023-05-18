@@ -6,6 +6,8 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 
+#define MAX_ARGS 100
+
 /**
  * execute_call - Executes an execve() call.
  * @argv: argument vector passed
@@ -155,4 +157,32 @@ void print_env(char *cmd)
 		}
 		return;
 	}
+}
+
+/**
+ * command_separator - handles command separator ;
+ * @arg: command recieved
+ * @delimeter: separator
+ *
+ * Return: an array of commands.
+ */
+char **command_separator(char *line, char delimiter)
+{
+	char **commands = malloc(MAX_ARGS * sizeof(char *));
+	char *token;
+	int i = 0;
+
+	if (!commands)
+		return (NULL);
+
+	token = strtok(line, &delimiter);
+	while (token != NULL)
+	{
+		commands[i++] = token;
+		token = strtok(NULL, &delimiter);
+	}
+
+	commands[i] = NULL;
+
+	return (commands);
 }
