@@ -1,7 +1,7 @@
 #include "main.h"
 #include <stdlib.h>
 #include <stdio.h>
-
+#include <unistd.h>
 
 /**
  * check_builtins - checks if command is a builtin.
@@ -16,6 +16,7 @@ int (*check_builtins(char **args))(char **)
 	_builtins builtins[] = {
 		{"setenv", &_setenv},
 		{"unsetenv", &_unsetenv},
+		{"cd", &_cd},
 		{NULL, NULL}
 	};
 
@@ -65,6 +66,53 @@ int _unsetenv(char **args)
 	if (unsetenv(args[1]) != 0)
 	{
 		fprintf(stderr, "Error: unable to unset environment variable\n");
+		return (1);
+	}
+	return (0);
+}
+
+/**
+ * _cd - changes current working directory.
+ * @args: command line arguments
+ *
+ * Return: 0 on success, 1 on failure.
+ */
+int _cd(char **args)
+{
+	char *dir;
+	char cwd[4096];
+
+	if (args[1] == NULL)
+	{
+		dir = getenv("HOME");
+		if (dir == NULL)
+		{
+			fprintf(stderr, "cd: No $HOME variable set\n");
+			return (1);
+		}
+	}
+	else if (args[1][0] == '-' && args[1][1] == '\0')
+	{
+		dir = getenv("OLDPWD");
+		if (dir == NULL)
+			return (1);
+	}
+	else
+		dir = args[1];
+
+	if (chdir(dir) != 0)
+	{
+		fprintf(stderr, "./hsh: 1: cd: can't cd to %s", dir);
+		return (1);
+	}
+	if (getcwd(cwd, sizeof(cwd)) == NULL || setenv("PWD", cwd, 1) != 0)
+	{
+		perror("cd");
+		return (1);
+	}
+	if (setenv("OLDPWD", getenv("PWD"), 1) != 0)
+	{
+		perror("cd");
 		return (1);
 	}
 	return (0);

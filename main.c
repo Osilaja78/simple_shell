@@ -6,7 +6,6 @@
 #include "main.h"
 #include <signal.h>
 
-/*char **create_arg_list(char *tok, int count, char *lineptr, char *lineptr_2);*/
 char **create_arg_list(char *tok, int count);
 int count_token(char *token);
 
@@ -58,30 +57,12 @@ int main(int argc, char **argv)
 				if (builtin_command != NULL)
 					exit_status = (*builtin_command)(argv);
 
-				exit_status = execute_call(argv);
+				if (builtin_command == NULL)
+					exit_status = execute_call(argv);
 			}
 
 			token = _strtow(NULL, delimeter);
 		}
-		/*token = _strtok(lineptr, delimeter);
-		count = 0;
-		while (token != NULL)
-		{
-			count++;
-			token = _strtok(NULL, delimeter);
-		}
-		count++;
-
-		argv = create_arg_list(token, count, lineptr, lineptr_2);
-		if (argv[0] != NULL)
-		{
-			exit_shell(argv[0], count, lineptr, lineptr_2, argv);
-			builtin_command = check_builtins(argv);
-			if (builtin_command != NULL)
-				exit_status = (*builtin_command)(argv);
-
-			exit_status = execute_call(argv);
-		}*/
 
 		for (j = 0; j < count; j++)
 			free(argv[j]);
@@ -122,6 +103,7 @@ int count_token(char *token)
 /**
  * create_arg_list - creates an argument list.
  * @tok: token recieved
+ * @count: no. of tokens to allocate memory for
  *
  * Return: list of arguments.
  */
@@ -150,38 +132,3 @@ char **create_arg_list(char *tok, int count)
 	av[i] = NULL;
 	return (av);
 }
-
-/**
- * create_arg_list - creates a list of args for execve.
- * @tok: token passed from main
- * @count: no of arguments passed
- * @lineptr: pointer passed from main
- * @lineptr_2: pointer copy passed from main
- *
- * Return: list of arguments.
- */
-/*char **create_arg_list(char *tok, int count, char *lineptr, char *lineptr_2)
-{
-	char **av;
-	const char *delimeter = " \n";
-	int i;
-
-	av = malloc(sizeof(char *) * count);
-	if (av == NULL)
-	{
-		perror("Failed to allocate memory\n");
-		free(lineptr_2);
-		free(lineptr);
-		return (NULL);
-	}
-
-	tok = _strtok(lineptr_2, delimeter);
-	for (i = 0; tok != NULL; i++)
-	{
-		av[i] = _strdup(tok);
-		tok = _strtok(NULL, delimeter);
-	}
-
-	av[i] = NULL;
-	return (av);
-}*/

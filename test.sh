@@ -32,4 +32,14 @@ dir" | ./hsh
 echo "expected"
 echo "dfdd" | /bin/sh
 echo "got"
-echo "dfdd" | ./hsh
+echo "dfdd" | ./hsha
+
+# 6..............
+echo "expected"
+echo "pwd
+cd
+pwd" | /bin/sh
+echo "got"
+echo "pwd
+cd
+pwd" | ./hsh

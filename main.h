@@ -3,6 +3,8 @@
 
 #include <stdio.h>
 
+/* ----- Prototype for utility functions ----- */
+
 int execute_call(char **argv);
 char *get_file_path(char *cmd);
 int builtin_env(void);
@@ -10,8 +12,10 @@ void exit_shell(char *cmd, int count, char *l_ptr, char *l_ptr_2, char **argv);
 void print_env(char *cmd);
 extern char **environ;
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
+char **command_separator(char *line, char delimiter);
 
-/* Prototype for string functions */
+/* ----- Prototype for string functions ----- */
+
 char *_strtok(char *str, const char *delim);
 char *_strtow(char *str, const char *delim);
 char *_strchr(const char *str, int c);
@@ -38,6 +42,7 @@ typedef struct _builtins
 
 int _setenv(char **args);
 int _unsetenv(char **args);
+int _cd(char **args);
 int (*check_builtins(char **args))(char **);
 
 #endif
