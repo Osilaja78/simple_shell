@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 	const char *delimeter = "\n";
 	size_t n = 0;
 	ssize_t chars_read;
-	int count, j, is_interactive = isatty(STDIN_FILENO);
+	int count, j, k, is_interactive = isatty(STDIN_FILENO);
 	int exit_status = 0;
 	int (*builtin_command)(char **);
 
@@ -48,23 +48,28 @@ int main(int argc, char **argv)
 		{
 			lineptr_2 = _strdup(token);
 			count = count_token(lineptr_2);
-			/*sep = command_separator(token, ';');
-			count = count_token(sep);*/
-			argv = create_arg_list(sep, count);
-
-			if (argv[0] != NULL)
+			sep = command_separator(token, ';');
+			k = 0;
+			while (sep[k] != NULL)
 			{
-				exit_shell(argv[0], count, lineptr, lineptr_2, argv);
-				builtin_command = check_builtins(argv);
-				if (builtin_command != NULL)
-					exit_status = (*builtin_command)(argv);
+				argv = create_arg_list(sep[k], count);
 
-				if (builtin_command == NULL)
-					exit_status = execute_call(argv);
+				if (argv[0] != NULL)
+				{
+					exit_shell(argv[0], count, lineptr, lineptr_2, argv);
+					builtin_command = check_builtins(argv);
+					if (builtin_command != NULL)
+						exit_status = (*builtin_command)(argv);
+
+					if (builtin_command == NULL)
+						exit_status = execute_call(argv);
+				}
+				k++;
 			}
 
 			token = _strtow(NULL, delimeter);
 		}
+		free(sep);
 
 		for (j = 0; j < count; j++)
 			free(argv[j]);
@@ -99,7 +104,6 @@ int count_token(char *token)
 		tok = _strtok(NULL, delimeter);
 	}
 	count++;
-	printf("%i\n", count);
 	return (count);
 }
 
