@@ -138,39 +138,6 @@ char **create_arg_list(char *tok, int count)
 	if (av == NULL)
 		return (NULL);
 
-	/*token = _strtok(command, delimeter);
-	for (i = 0; token != NULL; i++)
-	{
-		if (_strchr(token, '\'') != NULL)
-		{
-			if (quote == NULL)
-				quote = token;
-			else
-			{
-				strcat(quote, " ");
-				strcat(quote, token);
-			}
-			printf("**%s\n", quote);
-		}
-		
-		if (quote != NULL)
-		{
-			strcat(quote, " ");
-			strcat(quote, token);
-			printf("---- %s\n", token);
-		}
-		else
-			av[i] = _strdup(token);
-
-		if (quote != NULL && strchr(quote, '\'') != NULL)
-		{
-			av[i] = _strdup(quote);
-			quote = NULL;
-		}
-		token = _strtok(NULL, delimeter);
-	}
-
-	av[i] = NULL;*/
 	/**
 	 * tokenize the command (by space) and store
 	 * each command in the allocated memory

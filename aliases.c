@@ -6,7 +6,12 @@
 Alias aliases[MAX_ALIASES];  /* Array to store aliases */
 int num_aliases = 0;  /* Number of aliases currently defined */
 
-void print_aliases()
+/**
+ * print_aliases - prints all aliases
+ *
+ * Return: nothing.
+ */
+void print_aliases(void)
 {
 	int i;
 
@@ -16,6 +21,12 @@ void print_aliases()
 	}
 }
 
+/**
+ * print_alias - prints a single alias.
+ * @name: name of alias to print
+ *
+ * Return: nothing.
+ */
 void print_alias(char *name)
 {
 	int i;
@@ -30,6 +41,13 @@ void print_alias(char *name)
 	}
 }
 
+/**
+ * define_alias - defines an alias.
+ * @name: name of alias
+ * @value: value of alias
+ *
+ * Return: nothing.
+ */
 void define_alias(char *name, char *value)
 {
 	int i;
@@ -58,6 +76,12 @@ void define_alias(char *name, char *value)
 	num_aliases++;
 }
 
+/**
+ * process_alias_command - main function to handle aliases.
+ * @args: argunets recieved from stdin
+ *
+ * Return: 0 on success, and 1 on failure.
+ */
 int process_alias_command(char **args)
 {
 	int i;
@@ -66,10 +90,7 @@ int process_alias_command(char **args)
 	if (_strcmp(args[0], "alias") == 0)
 	{
 		if (args[1] == NULL)
-		{
-			/* Print all aliases if no arg */
-			print_aliases();
-		}
+			print_aliases(); /* print all aliases if no args */
 		else if (args[2] == NULL)
 		{
 			/* One argument, print the specified alias */

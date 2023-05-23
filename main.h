@@ -54,13 +54,20 @@ int (*check_builtins(char **args))(char **);
 #define MAX_ALIAS_NAME 50  /* Maximum length of an alias name */
 #define MAX_ALIAS_VALUE 100  /* Maximum length of an alias value */
 
+/**
+ * struct Alias - sruct for aliases.
+ * @name: name of the alias
+ * @value: valu3 of the alias
+ *
+ * Description: contains struct for aliases.
+ */
 typedef struct Alias
 {
 	char name[MAX_ALIAS_NAME];
 	char value[MAX_ALIAS_VALUE];
 } Alias;
 
-void print_aliases();
+void print_aliases(void);
 void print_alias(char *name);
 void define_alias(char *name, char *value);
 int process_alias_command(char **args);
