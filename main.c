@@ -22,9 +22,10 @@ int main(int argc, char **argv)
 	const char *delimeter = "\n";
 	size_t n = 0;
 	ssize_t chars_read;
-	int count, j, k, is_interactive = isatty(STDIN_FILENO);
+	int count, j, k, l, m, is_interactive = isatty(STDIN_FILENO);
 	int exit_status = 0;
 	int (*builtin_command)(char **);
+	char *temp_sep, *temp_operator;
 
 	(void)argc;
 
@@ -47,33 +48,45 @@ int main(int argc, char **argv)
 		while (token != NULL)
 		{
 			lineptr_2 = _strdup(token);
-			count = count_token(lineptr_2);
-			sep = command_separator(token, ';');
+			sep = command_separator(token, ";");
 			k = 0;
 			while (sep[k] != NULL)
 			{
-				argv = create_arg_list(sep[k], count);
-
-				if (argv[0] != NULL)
+				temp_sep = _strdup(sep[k]);
+				temp_operator = _strdup(sep[k]);
+				l = check_logical_operators(temp_operator);
+				if (l == 0)
 				{
+					count = count_token(temp_sep);
+					argv = create_arg_list(sep[k], count);
 					exit_shell(argv[0], count, lineptr, lineptr_2, argv);
 					builtin_command = check_builtins(argv);
+
 					if (builtin_command != NULL)
 						exit_status = (*builtin_command)(argv);
 
 					if (builtin_command == NULL)
-						exit_status = execute_call(argv);
-				}
-				k++;
-			}
+					{
+						m = process_alias_command(argv);
+						exit_status = m;
+						if (m != 0)
+							exit_status = execute_call(argv);
+					}
 
+					for (j = 0; j < count; j++)
+						free(argv[j]);
+					free(argv);
+				}
+				else
+					exit_status = execute_commands(sep[k], l);
+				k++;
+				free(temp_sep);
+				free(temp_operator);
+			}
+			free(sep);
 			token = _strtow(NULL, delimeter);
 		}
-		free(sep);
 
-		for (j = 0; j < count; j++)
-			free(argv[j]);
-		free(argv);
 		if (lineptr != NULL)
 			free(lineptr);
 		free(lineptr_2);
@@ -125,6 +138,39 @@ char **create_arg_list(char *tok, int count)
 	if (av == NULL)
 		return (NULL);
 
+	/*token = _strtok(command, delimeter);
+	for (i = 0; token != NULL; i++)
+	{
+		if (_strchr(token, '\'') != NULL)
+		{
+			if (quote == NULL)
+				quote = token;
+			else
+			{
+				strcat(quote, " ");
+				strcat(quote, token);
+			}
+			printf("**%s\n", quote);
+		}
+		
+		if (quote != NULL)
+		{
+			strcat(quote, " ");
+			strcat(quote, token);
+			printf("---- %s\n", token);
+		}
+		else
+			av[i] = _strdup(token);
+
+		if (quote != NULL && strchr(quote, '\'') != NULL)
+		{
+			av[i] = _strdup(quote);
+			quote = NULL;
+		}
+		token = _strtok(NULL, delimeter);
+	}
+
+	av[i] = NULL;*/
 	/**
 	 * tokenize the command (by space) and store
 	 * each command in the allocated memory

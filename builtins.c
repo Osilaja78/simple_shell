@@ -102,7 +102,7 @@ int _cd(char **args)
 
 	if (chdir(dir) != 0)
 	{
-		fprintf(stderr, "./hsh: 1: cd: can't cd to %s", dir);
+		fprintf(stderr, "./hsh: 1: cd: can't cd to %s\n", dir);
 		return (1);
 	}
 	if (getcwd(cwd, sizeof(cwd)) == NULL || setenv("PWD", cwd, 1) != 0)

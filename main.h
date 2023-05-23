@@ -12,7 +12,11 @@ void exit_shell(char *cmd, int count, char *l_ptr, char *l_ptr_2, char **argv);
 void print_env(char *cmd);
 extern char **environ;
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
-char **command_separator(char *line, char delimiter);
+char **command_separator(char *line, char *delimiter);
+char **create_arg_list(char *tok, int count);
+int check_logical_operators(char *cmd);
+int execute_commands(char *commands, int operators);
+int call_execve(char **args, int count, char *lineptr);
 
 /* ----- Prototype for string functions ----- */
 
@@ -44,5 +48,22 @@ int _setenv(char **args);
 int _unsetenv(char **args);
 int _cd(char **args);
 int (*check_builtins(char **args))(char **);
+
+/* ------------- ALIASES -------------- */
+#define MAX_ALIASES 100  /* Maximum number of aliases */
+#define MAX_ALIAS_NAME 50  /* Maximum length of an alias name */
+#define MAX_ALIAS_VALUE 100  /* Maximum length of an alias value */
+
+typedef struct Alias
+{
+	char name[MAX_ALIAS_NAME];
+	char value[MAX_ALIAS_VALUE];
+} Alias;
+
+void print_aliases();
+void print_alias(char *name);
+void define_alias(char *name, char *value);
+int process_alias_command(char **args);
+
 
 #endif

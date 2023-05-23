@@ -161,25 +161,26 @@ void print_env(char *cmd)
 
 /**
  * command_separator - handles command separator ;
- * @arg: command recieved
- * @delimeter: separator
+ * @line: command recieved
+ * @delimiter: separator
  *
  * Return: an array of commands.
  */
-char **command_separator(char *line, char delimiter)
+char **command_separator(char *line, char *delimiter)
 {
-	char **commands = malloc(MAX_ARGS * sizeof(char *));
-	char *token;
-	int i = 0;
+	char **commands;
+	char *token =  NULL;
+	int i;
 
+	commands = malloc(MAX_ARGS * sizeof(char *));
 	if (!commands)
 		return (NULL);
 
-	token = strtok(line, &delimiter);
-	while (token != NULL)
+	token = _strtok(line, delimiter);
+	for (i = 0; token != NULL; i++)
 	{
-		commands[i++] = token;
-		token = strtok(NULL, &delimiter);
+		commands[i] = token;
+		token = _strtok(NULL, delimiter);
 	}
 
 	commands[i] = NULL;
