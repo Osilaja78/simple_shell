@@ -99,6 +99,7 @@ char *get_file_path(char *cmd)
 		}
 	}
 
+	free(path_cpy);
 	if (stat(cmd, &buffer) == 0)
 	{
 		free(path_cpy);
@@ -114,10 +115,13 @@ char *get_file_path(char *cmd)
  * @l_ptr: buffer to free
  * @l_ptr_2: buffer to free
  * @argv: arg list to free
+ * @t: mem to free
+ * @o: mem to free
  *
  * Return: Nothing.
  */
-void exit_shell(char *cmd, int count, char *l_ptr, char *l_ptr_2, char **argv)
+void exit_shell(char *cmd, int count, char *l_ptr, char *l_ptr_2, char **argv,\
+		char *t, char *o)
 {
 	int j, status = 0;
 
@@ -131,6 +135,8 @@ void exit_shell(char *cmd, int count, char *l_ptr, char *l_ptr_2, char **argv)
 		free(argv);
 		free(l_ptr);
 		free(l_ptr_2);
+		free(t);
+		free(o);
 		exit(status);
 		return;
 	}

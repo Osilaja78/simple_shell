@@ -3,20 +3,28 @@
 
 #include <stdio.h>
 
+#define MAX_COMMAND_LENGTH 1024
+
 /* ----- Prototype for utility functions ----- */
 
 int execute_call(char **argv);
 char *get_file_path(char *cmd);
 int builtin_env(void);
-void exit_shell(char *cmd, int count, char *l_ptr, char *l_ptr_2, char **argv);
+void exit_shell(char *cmd, int count, char *l_ptr, char *l_ptr_2, char **argv,\
+		char *t, char *o);
 void print_env(char *cmd);
 extern char **environ;
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 char **command_separator(char *line, char *delimiter);
 char **create_arg_list(char *tok, int count);
+int count_token(char *token);
 int check_logical_operators(char *cmd);
 int execute_commands(char *commands, int operators);
 int call_execve(char **args, int count, char *lineptr);
+int handle_variables_replacement(char **argv, int status);
+int file_as_input(char *filename, char **argv);
+int handle_all_commands(char *cmd, char **argv, int exit_status, char *lineptr\
+		, char *lineptr_2);
 
 /* ----- Prototype for string functions ----- */
 

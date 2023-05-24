@@ -99,11 +99,11 @@ int process_alias_command(char **args)
 		else
 		{
 			result = malloc(sizeof(char) * 10);
-			strcpy(result, "");
+			_strcpy(result, "");
 			for (i = 1; args[i] != NULL; i++)
 			{
-				strcat(result, args[i]);
-				strcat(result, " ");
+				_strcat(result, args[i]);
+				_strcat(result, " ");
 			}
 			name = _strtok(result, "=");
 			value = _strtok(NULL, "=");
@@ -118,10 +118,10 @@ int process_alias_command(char **args)
 				/* Define or redefine the alias */
 				define_alias(name, value);
 			}
+			free(result);
 		}
 	}
 	else
 		return (1);
-	free(result);
 	return (0);
 }

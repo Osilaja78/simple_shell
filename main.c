@@ -22,12 +22,16 @@ int main(int argc, char **argv)
 	const char *delimeter = "\n";
 	size_t n = 0;
 	ssize_t chars_read;
-	int count, j, k, l, m, is_interactive = isatty(STDIN_FILENO);
+	int k, is_interactive = isatty(STDIN_FILENO);
 	int exit_status = 0;
-	int (*builtin_command)(char **);
-	char *temp_sep, *temp_operator;
+	char *filename;
 
-	(void)argc;
+	if (argc == 2)
+	{
+		filename = argv[1];
+		exit_status = file_as_input(filename, argv);
+		return (exit_status);
+	}
 
 	/* main loop for the program */
 	while (1)
@@ -52,36 +56,9 @@ int main(int argc, char **argv)
 			k = 0;
 			while (sep[k] != NULL)
 			{
-				temp_sep = _strdup(sep[k]);
-				temp_operator = _strdup(sep[k]);
-				l = check_logical_operators(temp_operator);
-				if (l == 0)
-				{
-					count = count_token(temp_sep);
-					argv = create_arg_list(sep[k], count);
-					exit_shell(argv[0], count, lineptr, lineptr_2, argv);
-					builtin_command = check_builtins(argv);
-
-					if (builtin_command != NULL)
-						exit_status = (*builtin_command)(argv);
-
-					if (builtin_command == NULL)
-					{
-						m = process_alias_command(argv);
-						exit_status = m;
-						if (m != 0)
-							exit_status = execute_call(argv);
-					}
-
-					for (j = 0; j < count; j++)
-						free(argv[j]);
-					free(argv);
-				}
-				else
-					exit_status = execute_commands(sep[k], l);
+				exit_status = handle_all_commands(sep[k], argv, exit_status, lineptr,\
+						lineptr_2);
 				k++;
-				free(temp_sep);
-				free(temp_operator);
 			}
 			free(sep);
 			token = _strtow(NULL, delimeter);
@@ -113,6 +90,8 @@ int count_token(char *token)
 	count = 0;
 	while (tok != NULL)
 	{
+		if (_strchr(tok, '#') != NULL)
+			break;
 		count++;
 		tok = _strtok(NULL, delimeter);
 	}
@@ -145,6 +124,9 @@ char **create_arg_list(char *tok, int count)
 	token = _strtok(command, delimeter);
 	for (i = 0; token != NULL; i++)
 	{
+		if (_strchr(token, '#') != NULL)
+			break;
+
 		av[i] = _strdup(token);
 		token = _strtok(NULL, delimeter);
 	}
