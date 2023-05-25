@@ -97,7 +97,7 @@ char *get_file_path(char *cmd)
 		}
 	}
 
-	free(path_cpy);
+	/*free(path_cpy);*/
 	if (stat(cmd, &buffer) == 0)
 	{
 		free(path_cpy);
