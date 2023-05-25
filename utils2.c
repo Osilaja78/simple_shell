@@ -28,7 +28,7 @@ int handle_all(char *cmd, char **av, int status, char *p, char *p_2, char **s)
 		if (av == NULL)
 			return (status);
 		if (_strcmp(av[0], "exit") == 0)
-			free(s);
+				free(s);
 		m_exit(av[0], count, p, p_2, av, temp_s, temp_o);
 		builtin_command = check_builtins(av);
 

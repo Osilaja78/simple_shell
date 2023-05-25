@@ -169,7 +169,7 @@ int file_as_input(char *filename, char **argv)
 
 	if (file == NULL)
 	{
-		perror("Failed to open file");
+		fprintf(stderr, "./hsh: 0: Can't opne %s\n", filename);
 		return (1);
 	}
 
