@@ -22,7 +22,7 @@ int execute_commands(char *commands, int operators);
 int call_execve(char **args, int count, char *lineptr);
 int handle_variables_replacement(char **argv, int status);
 int file_as_input(char *filename, char **argv);
-int handle_all(char *cmd, char **argv, int status, char *line, char *line_2);
+int handle_all(char *cmd, char **av, int status, char *l, char *l_2, char **s);
 
 /* ----- Prototype for string functions ----- */
 

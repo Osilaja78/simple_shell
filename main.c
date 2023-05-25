@@ -56,16 +56,16 @@ int main(int argc, char **argv)
 			k = 0;
 			while (sep[k] != NULL)
 			{
-				status = handle_all(sep[k], argv, status, lineptr, lineptr_2);
+				status = handle_all(sep[k], argv, status, lineptr, lineptr_2, sep);
 				k++;
 			}
 			free(sep);
+			free(lineptr_2);
 			token = _strtow(NULL, delimeter);
 		}
 
 		if (lineptr != NULL)
 			free(lineptr);
-		free(lineptr_2);
 		if (!is_interactive)
 			return (status);
 	}
@@ -130,6 +130,8 @@ char **create_arg_list(char *tok, int count)
 		token = _strtok(NULL, delimeter);
 	}
 
+	if (i == 0)
+		return (NULL);
 	av[i] = NULL;
 	return (av);
 }

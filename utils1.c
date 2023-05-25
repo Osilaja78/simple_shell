@@ -74,7 +74,7 @@ int execute_commands(char *commands, int operators)
 		i = 0;
 		while (sep[i] != NULL)
 		{
-			count = 5;
+			count = count_token(sep[i]);
 			args = create_arg_list(sep[i], count);
 
 			exit_status = call_execve(args, count, lineptr);
@@ -92,7 +92,7 @@ int execute_commands(char *commands, int operators)
 		i = 0;
 		while (sep[i] != NULL)
 		{
-			count = 5;
+			count = count_token(sep[i]);
 			args = create_arg_list(sep[i], count);
 			exit_status = call_execve(args, count, lineptr);
 			i++;
@@ -177,7 +177,7 @@ int file_as_input(char *filename, char **argv)
 		k = 0;
 		while (sep[k] != NULL)
 		{
-			exit_status = handle_all(sep[k], argv, exit_status, NULL, NULL);
+			exit_status = handle_all(sep[k], argv, exit_status, NULL, NULL, sep);
 			k++;
 		}
 		free(sep);

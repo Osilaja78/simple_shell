@@ -74,7 +74,6 @@ char *get_file_path(char *cmd)
 		return (NULL);
 	path_cpy = _strdup(path);
 	cmd_len = _strlen(cmd);
-
 	p_token = _strtok(path_cpy, ":");
 	while (p_token != NULL)
 	{
@@ -96,13 +95,13 @@ char *get_file_path(char *cmd)
 			p_token = _strtok(NULL, ":");
 		}
 	}
-
-	/*free(path_cpy);*/
 	if (stat(cmd, &buffer) == 0)
 	{
 		free(path_cpy);
 		return (cmd);
 	}
+	if (path_cpy != NULL)
+		free(path_cpy);
 	return (NULL);
 }
 
