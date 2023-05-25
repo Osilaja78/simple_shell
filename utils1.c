@@ -149,7 +149,7 @@ int handle_variables_replacement(char **argv, int status)
 			return (1);
 	}
 	else
-		return (1);
+		return (99);
 	return (0);
 }
 

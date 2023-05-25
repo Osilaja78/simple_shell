@@ -38,7 +38,7 @@ int handle_all(char *cmd, char **av, int status, char *p, char *p_2, char **s)
 		{
 			o = handle_variables_replacement(av, status);
 			m = process_alias_command(av);
-			status = m ? m : o;
+			status = o == 99 ? m : o;
 
 			if (m != 0 && o != 0)
 				status = execute_call(av);
