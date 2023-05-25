@@ -17,7 +17,7 @@ void print_aliases(void)
 
 	for (i = 0; i < num_aliases; i++)
 	{
-		printf("%s=%s\n", aliases[i].name, aliases[i].value);
+		printf("%s='%s'\n", aliases[i].name, aliases[i].value);
 	}
 }
 
@@ -35,7 +35,7 @@ void print_alias(char *name)
 	{
 		if (_strcmp(name, aliases[i].name) == 0)
 		{
-			printf("%s=%s\n", aliases[i].name, aliases[i].value);
+			printf("%s='%s'\n", aliases[i].name, aliases[i].value);
 			return;
 		}
 	}
@@ -91,7 +91,7 @@ int process_alias_command(char **args)
 	{
 		if (args[1] == NULL)
 			print_aliases(); /* print all aliases if no args */
-		else if (args[2] == NULL)
+		else if (_strchr(args[1], '=') == NULL)
 		{
 			/* One argument, print the specified alias */
 			print_alias(args[1]);
@@ -103,7 +103,6 @@ int process_alias_command(char **args)
 			for (i = 1; args[i] != NULL; i++)
 			{
 				_strcat(result, args[i]);
-				_strcat(result, " ");
 			}
 			name = _strtok(result, "=");
 			value = _strtok(NULL, "=");
