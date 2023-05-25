@@ -13,14 +13,24 @@ int check_logical_operators(char *cmd)
 {
 	char *token;
 	const char *delimeter = " \n";
+	char *result;
 
 	token = _strtok(cmd, delimeter);
 	while (token != NULL)
 	{
-		if (_strcmp(token, "&&") == 0)
-			return (1); /* it is an and operator */
-		else if (_strcmp(token, "||") == 0)
-			return (2); /* it is an or operator */
+		result = _strchr(token, '&');
+		if (result != NULL)
+		{
+			if (*(result + 1) == '&')
+				return (1); /* it is an and operator */
+		}
+
+		result = _strchr(token, '|');
+		if (result != NULL)
+		{
+			if (*(result + 1) == '|')
+				return (2); /* it is an or operator */
+		}
 		token = _strtok(NULL, delimeter);
 	}
 	return (0); /* no logical operator found */
