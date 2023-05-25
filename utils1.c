@@ -41,7 +41,7 @@ int call_execve(char **args, int count, char *lineptr)
 
 	if (args[0] != NULL)
 	{
-		exit_shell(args[0], count, lineptr, NULL, args, NULL, NULL);
+		m_exit(args[0], count, lineptr, NULL, args, NULL, NULL);
 		builtin_command = check_builtins(args);
 		if (builtin_command != NULL)
 			status = (*builtin_command)(args);
@@ -65,7 +65,6 @@ int call_execve(char **args, int count, char *lineptr)
 int execute_commands(char *commands, int operators)
 {
 	int i, j, exit_status, count;
-	/*const char *delimeter_1 = "&&", *delimeter_2 = "||";*/
 	char **sep, **args, *lineptr;
 
 	lineptr = _strdup(commands);
@@ -178,7 +177,7 @@ int file_as_input(char *filename, char **argv)
 		k = 0;
 		while (sep[k] != NULL)
 		{
-			exit_status = handle_all_commands(sep[k], argv, exit_status, NULL, NULL);
+			exit_status = handle_all(sep[k], argv, exit_status, NULL, NULL);
 			k++;
 		}
 		free(sep);

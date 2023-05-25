@@ -2,45 +2,43 @@
 #include <stdlib.h>
 
 /**
- * handle_all_commands - handles calling all commands.
+ * handle_all - handles calling all commands.
  * @cmd: command recieved
  * @argv: arg vector
- * @exit_status: exit status of command
- * @lineptr: line pointer to free
- * @lineptr_2: line pointer to free
+ * @status: exit status of command
+ * @line: line pointer to free
+ * @line_2: line pointer to free
  *
  * Return: exit status of command.
  */
-int handle_all_commands(char *cmd, char **argv, int exit_status,\
-	char *lineptr, char *lineptr_2)
+int handle_all(char *cmd, char **argv, int status, char *line, char *line_2)
 {
-	char *temp_sep, *temp_operator;
+	char *temp_s, *temp_o;
 	int count, j, l, m, o;
 	int (*builtin_command)(char **);
 
-	temp_sep = _strdup(cmd);
-	temp_operator = _strdup(cmd);
-	l = check_logical_operators(temp_operator);
+	temp_s = _strdup(cmd);
+	temp_o = _strdup(cmd);
+	l = check_logical_operators(temp_o);
 	if (l == 0)
 	{
-		count = count_token(temp_sep);
+		count = count_token(temp_s);
 		argv = create_arg_list(cmd, count);
-		exit_shell(argv[0], count, lineptr, lineptr_2, argv, temp_sep, \
-				temp_operator);
+		m_exit(argv[0], count, line, line_2, argv, temp_s, temp_o);
 		builtin_command = check_builtins(argv);
 
 		if (builtin_command != NULL)
-			exit_status = (*builtin_command)(argv);
+			status = (*builtin_command)(argv);
 
 		if (builtin_command == NULL)
 		{
-			o = handle_variables_replacement(argv, exit_status);
+			o = handle_variables_replacement(argv, status);
 			m = process_alias_command(argv);
-			exit_status = m ? m : o;
+			status = m ? m : o;
 
 			if (m != 0 && o != 0)
 			{
-				exit_status = execute_call(argv);
+				status = execute_call(argv);
 			}
 		}
 
@@ -49,9 +47,9 @@ int handle_all_commands(char *cmd, char **argv, int exit_status,\
 		free(argv);
 	}
 	else
-		exit_status = execute_commands(cmd, l);
+		status = execute_commands(cmd, l);
 
-	free(temp_sep);
-	free(temp_operator);
-	return (exit_status);
+	free(temp_s);
+	free(temp_o);
+	return (status);
 }

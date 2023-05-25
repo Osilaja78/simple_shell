@@ -23,14 +23,14 @@ int main(int argc, char **argv)
 	size_t n = 0;
 	ssize_t chars_read;
 	int k, is_interactive = isatty(STDIN_FILENO);
-	int exit_status = 0;
+	int status = 0;
 	char *filename;
 
 	if (argc == 2)
 	{
 		filename = argv[1];
-		exit_status = file_as_input(filename, argv);
-		return (exit_status);
+		status = file_as_input(filename, argv);
+		return (status);
 	}
 
 	/* main loop for the program */
@@ -56,8 +56,7 @@ int main(int argc, char **argv)
 			k = 0;
 			while (sep[k] != NULL)
 			{
-				exit_status = handle_all_commands(sep[k], argv, exit_status, lineptr,\
-						lineptr_2);
+				status = handle_all(sep[k], argv, status, lineptr, lineptr_2);
 				k++;
 			}
 			free(sep);
@@ -68,7 +67,7 @@ int main(int argc, char **argv)
 			free(lineptr);
 		free(lineptr_2);
 		if (!is_interactive)
-			return (exit_status);
+			return (status);
 	}
 	free(lineptr_2);
 	return (0);

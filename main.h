@@ -10,8 +10,7 @@
 int execute_call(char **argv);
 char *get_file_path(char *cmd);
 int builtin_env(void);
-void exit_shell(char *cmd, int count, char *l_ptr, char *l_ptr_2, char **argv,\
-		char *t, char *o);
+void m_exit(char *cmd, int c, char *l, char *l_2, char **av, char *t, char *o);
 void print_env(char *cmd);
 extern char **environ;
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
@@ -23,8 +22,7 @@ int execute_commands(char *commands, int operators);
 int call_execve(char **args, int count, char *lineptr);
 int handle_variables_replacement(char **argv, int status);
 int file_as_input(char *filename, char **argv);
-int handle_all_commands(char *cmd, char **argv, int exit_status, char *lineptr\
-		, char *lineptr_2);
+int handle_all(char *cmd, char **argv, int status, char *line, char *line_2);
 
 /* ----- Prototype for string functions ----- */
 

@@ -107,32 +107,31 @@ char *get_file_path(char *cmd)
 }
 
 /**
- * exit_shell - Exits the shell.
+ * m_exit - Exits the shell.
  * @cmd: command passed
- * @count: count passed
- * @l_ptr: buffer to free
- * @l_ptr_2: buffer to free
- * @argv: arg list to free
+ * @c: count passed
+ * @l: buffer to free
+ * @l_2: buffer to free
+ * @av: arg list to free
  * @t: mem to free
  * @o: mem to free
  *
  * Return: Nothing.
  */
-void exit_shell(char *cmd, int count, char *l_ptr, char *l_ptr_2, char **argv,\
-		char *t, char *o)
+void m_exit(char *cmd, int c, char *l, char *l_2, char **av, char *t, char *o)
 {
 	int j, status = 0;
 
 	if (_strcmp(cmd, "exit") == 0)
 	{
-		if (count > 2)
-			status = atoi(argv[1]);
+		if (c > 2)
+			status = atoi(av[1]);
 
-		for (j = 0; j < count; j++)
-			free(argv[j]);
-		free(argv);
-		free(l_ptr);
-		free(l_ptr_2);
+		for (j = 0; j < c; j++)
+			free(av[j]);
+		free(av);
+		free(l);
+		free(l_2);
 		free(t);
 		free(o);
 		exit(status);
