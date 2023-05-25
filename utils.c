@@ -71,9 +71,7 @@ char *get_file_path(char *cmd)
 
 	path = getenv("PATH");
 	if (!path)
-	{
 		return (NULL);
-	}
 	path_cpy = _strdup(path);
 	cmd_len = _strlen(cmd);
 
