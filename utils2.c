@@ -81,11 +81,6 @@ char **replace_var(char **argv)
 				free(argv[i]);
 				argv[i] = _strdup(value);
 			}
-			else
-			{
-				free(argv[i]);
-				argv[i] = _strdup("");
-			}
 		}
 	}
 	return (argv);
