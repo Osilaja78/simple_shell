@@ -143,7 +143,7 @@ int handle_variables_replacement(char **argv, int status)
 				printf("%d\n", pid);
 			}
 			else
-				printf(" \n");
+				execute_call(argv);
 		}
 		else
 			return (1);
