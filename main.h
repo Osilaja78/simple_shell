@@ -24,6 +24,7 @@ int handle_variables_replacement(char **argv, int status);
 int file_as_input(char *filename, char **argv);
 int handle_all(char *cmd, char **av, int status, char *l, char *l_2, char **s);
 char **replace_var(char **argv);
+int execute_for_cs(char *sep, char *lineptr);
 
 /* ----- Prototype for string functions ----- */
 

@@ -85,3 +85,26 @@ char **replace_var(char **argv)
 	}
 	return (argv);
 }
+
+/**
+ * execute_for_cs - calls execve for command_separator.
+ * @sep: cmd to execute
+ * @lineptr: passed to call_execve
+ *
+ * Return: nothing.
+ */
+int execute_for_cs(char *sep, char *lineptr)
+{
+	int count, j, exit_status;
+	char **args;
+
+	count = count_token(sep);
+	args = create_arg_list(sep, count);
+	exit_status = call_execve(args, count, lineptr);
+
+	for (j = 0; j < count; j++)
+		free(args[j]);
+	free(args);
+
+	return (exit_status);
+}

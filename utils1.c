@@ -74,8 +74,8 @@ int call_execve(char **args, int count, char *lineptr)
  */
 int execute_commands(char *commands, int operators)
 {
-	int i, j, exit_status, count;
-	char **sep, **args, *lineptr;
+	int i, exit_status;
+	char **sep, *lineptr;
 
 	lineptr = _strdup(commands);
 	if (operators == 1)
@@ -84,14 +84,8 @@ int execute_commands(char *commands, int operators)
 		i = 0;
 		while (sep[i] != NULL)
 		{
-			count = count_token(sep[i]);
-			args = create_arg_list(sep[i], count);
-
-			exit_status = call_execve(args, count, lineptr);
+			exit_status = execute_for_cs(sep[i], lineptr);
 			i++;
-			for (j = 0; j < count; j++)
-				free(args[j]);
-			free(args);
 			if (exit_status != 0)
 				break;
 		}
@@ -102,13 +96,8 @@ int execute_commands(char *commands, int operators)
 		i = 0;
 		while (sep[i] != NULL)
 		{
-			count = count_token(sep[i]);
-			args = create_arg_list(sep[i], count);
-			exit_status = call_execve(args, count, lineptr);
+			exit_status = execute_for_cs(sep[i], lineptr);
 			i++;
-			for (j = 0; j < count; j++)
-				free(args[j]);
-			free(args);
 			if (exit_status == 0)
 				break;
 		}
