@@ -25,6 +25,7 @@ int execute_call(char **argv)
 		return (-1);
 
 	print_env(cmd);
+	replace_var(argv);
 	actual_cmd = get_file_path(cmd);
 
 	if (actual_cmd == NULL)

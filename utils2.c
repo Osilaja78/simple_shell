@@ -55,3 +55,33 @@ int handle_all(char *cmd, char **av, int status, char *p, char *p_2, char **s)
 	free(temp_o);
 	return (status);
 }
+
+/**
+ * replace_var - repaces an env var.
+ * @argv: args recieved
+ *
+ * Return: nothing.
+ */
+char **replace_var(char **argv)
+{
+	char *var, *value, *var_pos;
+	int i;
+
+	for (i = 0; argv[i] != NULL; i++)
+	{
+		var_pos = _strchr(argv[i], '$');
+		if (var_pos != NULL)
+		{
+			var = var_pos + 1;
+			value = getenv(var);
+
+			if (value != NULL)
+			{
+				*var_pos = '\0';
+				free(argv[i]);
+				argv[i] = _strdup(value);
+			}
+		}
+	}
+	return (argv);
+}
