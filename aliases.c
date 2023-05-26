@@ -85,39 +85,37 @@ void define_alias(char *name, char *value)
 int process_alias_command(char **args)
 {
 	int i;
-	char *name, *value, *result;
+	char *name, *value;
 
 	if (_strcmp(args[0], "alias") == 0)
 	{
 		if (args[1] == NULL)
 			print_aliases(); /* print all aliases if no args */
-		else if (_strchr(args[1], '=') == NULL)
+		for (i = 1; args[i] != NULL; i++)
 		{
-			/* One argument, print the specified alias */
-			print_alias(args[1]);
-		}
-		else
-		{
-			result = malloc(sizeof(char) * 10);
-			_strcpy(result, "");
-			for (i = 1; args[i] != NULL; i++)
+			if (_strcmp(args[i], "alias") == 0)
+				print_aliases(); /* print all aliases if no args */
+			else if (_strchr(args[i], '=') == NULL)
 			{
-				_strcat(result, args[i]);
-			}
-			name = _strtok(result, "=");
-			value = _strtok(NULL, "=");
-
-			if (value == NULL)
-			{
-				/* No value provided, print the specified alias */
-				print_alias(name);
+				/* One argument, print the specified alias */
+				print_alias(args[i]);
 			}
 			else
 			{
-				/* Define or redefine the alias */
-				define_alias(name, value);
+				name = _strtok(args[i], "=");
+				value = _strtok(NULL, "=");
+
+				if (value == NULL)
+				{
+					/* No value provided, print the specified alias */
+					print_alias(name);
+				}
+				else
+				{
+					/* Define or redefine the alias */
+					define_alias(name, value);
+				}
 			}
-			free(result);
 		}
 	}
 	else
